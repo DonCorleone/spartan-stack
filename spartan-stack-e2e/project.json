@@ -1,0 +1,11 @@
+{
+  "name": "spartan-stack-e2e",
+  "$schema": "../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "spartan-stack-e2e/src",
+  "implicitDependencies": [
+    "spartan-stack"
+  ],
+  "// targets": "to see all targets run: nx show project spartan-stack-e2e --web",
+  "targets": {}
+}
