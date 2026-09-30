@@ -1,6 +1,7 @@
 /// <reference types="vitest" />
 
 import analog from '@analogjs/platform';
+import { resolve } from 'path';
 import { defineConfig } from 'vite';
 import viteTsConfigPaths from 'vite-tsconfig-paths';
 
@@ -16,7 +17,14 @@ export default defineConfig(({ mode }) => {
     },
     server: {
       fs: {
-        allow: ['.'],
+        allow: ['.', '..'],
+      },
+    },
+    resolve: {
+      alias: {
+        '@spartan-ng/helm/button': resolve(__dirname, '../libs/ui/button/src/index.ts'),
+        '@spartan-ng/helm/utils': resolve(__dirname, '../libs/ui/utils/src/index.ts'),
+        '@spartan-ng/helm/radio-group': resolve(__dirname, '../libs/ui/radio-group/src/index.ts'),
       },
     },
     plugins: [

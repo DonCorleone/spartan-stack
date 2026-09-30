@@ -3,11 +3,11 @@ import { Component } from '@angular/core';
 import { AnalogWelcomeComponent } from './analog-welcome.component';
 
 @Component({
-  selector: 'spartan-stack-home',
+  selector: 'app-home',
   
   imports: [AnalogWelcomeComponent],
   template: `
-     <spartan-stack-analog-welcome/>
+     <app-analog-welcome/>
   `,
 })
 export default class HomeComponent {
