@@ -18,6 +18,15 @@ import { BrnRadio, BrnRadioGroup, type BrnRadioChange } from '@spartan-ng/brain/
 import { hlm } from '@spartan-ng/helm/utils';
 import type { ClassValue } from 'clsx';
 
+export type RadioVariant = 'default' | 'primary' | 'secondary' | 'tertiary';
+
+const variantStyles: Record<RadioVariant, string> = {
+	default:   '[--radio-color:var(--btn-default)] [--radio-active:var(--btn-default-darker)] [--radio-disabled:var(--btn-default-lighter)]',
+	primary:   '[--radio-color:var(--btn-primary)] [--radio-active:var(--btn-primary-darker)] [--radio-disabled:var(--btn-primary-lighter)]',
+	secondary: '[--radio-color:var(--btn-secondary)] [--radio-active:var(--btn-secondary-darker)] [--radio-disabled:var(--btn-secondary-lighter)]',
+	tertiary:  '[--radio-color:var(--btn-tertiary)] [--radio-active:var(--btn-tertiary-darker)] [--radio-disabled:var(--btn-tertiary-lighter)]',
+};
+
 @Component({
 	selector: 'hlm-radio',
 	imports: [BrnRadio],
@@ -59,62 +68,44 @@ export class HlmRadio<T = unknown> {
 	private readonly _radioGroup = inject(BrnRadioGroup, { optional: true });
 
 	protected readonly _ariaInvalid = computed(() => this._radioGroup?.controlState?.()?.invalid);
-
 	protected readonly _touched = computed(() => this._radioGroup?.controlState?.()?.touched);
 	protected readonly _dirty = computed(() => this._radioGroup?.controlState?.()?.dirty);
 	protected readonly _groupSpartanInvalid = computed(() => this._radioGroup?.controlState?.()?.spartanInvalid);
-
 	protected readonly _errorStateClass = computed(() => (this._groupSpartanInvalid() ? 'text-destructive' : ''));
 
+	public readonly variant = input<RadioVariant>('default');
 	public readonly userClass = input<ClassValue>('', { alias: 'class' });
+
 	protected readonly _computedClass = computed(() =>
 		hlm(
-			'group relative flex items-center gap-x-3 text-base',
-			'data-[disabled=true]:cursor-not-allowed',
+			'group relative flex h-12 w-[250px] cursor-pointer items-center gap-x-3 rounded-lg px-3.5 text-label font-medium text-white transition-colors select-none',
+			variantStyles[this.variant()],
+			'hover:[--radio-color:var(--radio-active)]',
+			'active:[--radio-color:var(--radio-active)]',
+			'data-[disabled=true]:cursor-not-allowed data-[disabled=true]:opacity-55 data-[disabled=true]:[--radio-color:var(--radio-disabled)]',
 			this.userClass(),
 			this._errorStateClass(),
 		),
 	);
 
-	/** Used to set the id on the underlying brn element. */
 	public readonly inputId = input<string | undefined>(undefined);
-
-	/** Used to set the aria-label attribute on the underlying brn element. */
 	public readonly ariaLabel = input<string | undefined>(undefined, { alias: 'aria-label' });
-
-	/** Used to set the aria-labelledby attribute on the underlying brn element. */
 	public readonly ariaLabelledby = input<string | undefined>(undefined, { alias: 'aria-labelledby' });
-
-	/** Used to set the aria-describedby attribute on the underlying brn element. */
 	public readonly ariaDescribedby = input<string | undefined>(undefined, { alias: 'aria-describedby' });
-
-	/**
-	 * The value this radio button represents.
-	 */
 	public readonly value = input.required<T>();
-
-	/** Whether the checkbox is required. */
 	public readonly required = input<boolean, BooleanInput>(false, { transform: booleanAttribute });
-
-	/** Whether the checkbox is disabled. */
 	public readonly disabled = input<boolean, BooleanInput>(false, { transform: booleanAttribute });
 
-	/**
-	 * Event emitted when the checked state of this radio button changes.
-	 */
 	// eslint-disable-next-line @angular-eslint/no-output-native
 	public readonly change = output<BrnRadioChange<T>>();
 
 	constructor() {
 		effect(() => {
 			const isDisabled = this.disabled();
-
 			if (!this._elementRef.nativeElement || !this._isBrowser) return;
-
 			const labelElement =
 				this._elementRef.nativeElement.closest('label') ??
 				this._document.querySelector(`label[for="${this.inputId()}"]`);
-
 			if (!labelElement) return;
 			this._renderer.setAttribute(labelElement, 'data-disabled', isDisabled ? 'true' : 'false');
 		});

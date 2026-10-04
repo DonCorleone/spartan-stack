@@ -25,12 +25,19 @@ export default defineConfig(({ mode }) => {
         '@spartan-ng/helm/button': resolve(__dirname, '../libs/ui/button/src/index.ts'),
         '@spartan-ng/helm/utils': resolve(__dirname, '../libs/ui/utils/src/index.ts'),
         '@spartan-ng/helm/radio-group': resolve(__dirname, '../libs/ui/radio-group/src/index.ts'),
+        '@spartan-ng/helm/checkbox': resolve(__dirname, '../libs/ui/checkbox/src/index.ts'),
+        '@spartan-ng/helm/combobox': resolve(__dirname, '../libs/ui/combobox/src/index.ts'),
+        '@spartan-ng/helm/input': resolve(__dirname, '../libs/ui/input/src/index.ts'),        
+        '@spartan-ng/helm/input-group': resolve(__dirname, '../libs/ui/input-group/src/index.ts'),        
+        '@spartan-ng/helm/textarea': resolve(__dirname, '../libs/ui/textarea/src/index.ts'),
+
       },
     },
     plugins: [
       analog(),
-      viteTsConfigPaths(),
-    ],
+      viteTsConfigPaths({
+        root: '../',
+      }),    ],
     test: {
       globals: true,
       environment: 'jsdom',

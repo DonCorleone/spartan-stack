@@ -14,12 +14,15 @@ export const buttonVariants = cva(
 				primary: 'bg-(--btn-primary) text-black hover:bg-(--btn-primary-darker) active:bg-(--btn-primary-darker) active:border-2 active:border-black data-disabled:bg-(--btn-primary-lighter)',
 				secondary: 'bg-(--btn-secondary) text-black hover:bg-(--btn-secondary-darker) active:bg-(--btn-secondary-darker) active:border-2 active:border-black data-disabled:bg-(--btn-secondary-lighter)',
 				tertiary: 'bg-(--btn-tertiary) text-white hover:bg-(--btn-tertiary-darker) active:bg-(--btn-tertiary-darker) active:border-2 active:border-black data-disabled:bg-(--btn-tertiary-lighter) data-disabled:text-black',
+				ghost: 'bg-transparent text-white hover:bg-white/10 active:bg-white/15 data-disabled:bg-transparent data-disabled:opacity-40',
 			},
 			size: {
 				default: 'h-16.25 w-54.5 text-base',
 				sm: 'h-12 w-40 text-sm',
 				lg: 'h-18 w-65 text-lg',
 				icon: 'size-16.25',
+				'icon-xs': 'size-12',
+
 			},
 		},
 		defaultVariants: {
